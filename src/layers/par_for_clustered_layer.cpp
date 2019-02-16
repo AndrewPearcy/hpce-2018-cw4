@@ -1,4 +1,5 @@
 #include "layer.hpp"
+#include <chrono>
 #include "tbb/tbb.h"
 
 class ParForClusteredLayer
@@ -45,7 +46,8 @@ public:
         int8_t *pOut        // Values of output neurons in -127..+127
     ) const
     {        
-        std::vector<int32_t>  acc(m_nOut, 0); // Create a working vector
+        auto begin = std::chrono::high_resolution_clock::now();
+	std::vector<int32_t>  acc(m_nOut, 0); // Create a working vector
 	unsigned incoming_synapses_size = incoming_synapses.size();
 	tbb::parallel_for(0u, incoming_synapses_size, [&](unsigned i){
 		std::vector<synapse_t> curr_output_neuron_synapses = incoming_synapses[i];
@@ -59,7 +61,10 @@ public:
 		}
             	pOut[i] = sigmoid( acc[i] ); // compress with sigmoid
         });
-    }
+
+	auto end = std::chrono::high_resolution_clock::now();
+	std::cerr << std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count() << "us" << std::endl;
+	}
 };
 
 LayerPtr CreateParForClusteredLayer(unsigned nIn, unsigned nOut, const std::vector<synapse_t> &synapses)
