@@ -1,4 +1,5 @@
 #include "layer.hpp"
+#include <chrono>
 
 class SimpleLayer
     : public Layer
@@ -33,6 +34,7 @@ public:
         int8_t *pOut        // Values of output neurons in -127..+127
     ) const
     {        
+	auto begin = std::chrono::high_resolution_clock::now();
         std::vector<int32_t> acc(m_nOut, 0); // Create a working vector
         
         for(unsigned i=0; i<m_synapses.size(); i++){
@@ -49,6 +51,9 @@ public:
             // Output maps to -127..+127 (7 fractional bits)
             pOut[i] = sigmoid( acc[i] ); // compress with sigmoid
         }
+	auto end = std::chrono::high_resolution_clock::now();
+        std::cerr << std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count() << "us" << std::endl;
+
     }
 };
 

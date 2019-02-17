@@ -1,3 +1,4 @@
+#include <chrono>
 #include "layer.hpp"
 #include "tbb/tbb.h"
 
@@ -34,6 +35,8 @@ public:
         int8_t *pOut        // Values of output neurons in -127..+127
     ) const
     {        
+	auto begin = std::chrono::high_resolution_clock::now();
+
         std::vector<int32_t> acc(m_nOut, 0); // Create a working vector
 	unsigned synapses_size = m_synapses.size();
 	tbb::parallel_for(0u, synapses_size, [&](unsigned i){        
@@ -50,6 +53,9 @@ public:
             // Output maps to -127..+127 (7 fractional bits)
             pOut[j] = sigmoid( acc[j] ); // compress with sigmoid
         });
+	auto end = std::chrono::high_resolution_clock::now();
+        std::cerr << std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count() << "us" << std::endl;
+
     }
 };
 
