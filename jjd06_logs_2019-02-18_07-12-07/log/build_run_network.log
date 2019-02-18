@@ -1,0 +1,29 @@
+src/tools/run_network.cpp: In function ‘int main(int, char**)’:
+src/tools/run_network.cpp:22:21: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+             if(colon!=std::string::npos){
+                     ^
+src/tools/run_network.cpp:46:26: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+             for(int i=0;i<layers.size();i++){
+                          ^
+src/layers/clustered_layer.cpp: In constructor ‘ClusteredLayer::ClusteredLayer(unsigned int, unsigned int, const std::vector<synapse_t>&)’:
+src/layers/clustered_layer.cpp:25:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i = 0; i < m_synapses.size(); i++) {
+                   ^
+src/layers/clustered_layer.cpp: In member function ‘virtual void ClusteredLayer::execute(const int8_t*, int8_t*) const’:
+src/layers/clustered_layer.cpp:52:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i = 0; i < incoming_synapses.size(); i++){
+                   ^
+src/layers/clustered_layer.cpp:54:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   for(int j = 0; j < curr_output_neuron_synapses.size(); j++){
+                    ^
+src/layers/clustered_layer.cpp:51:11: warning: unused variable ‘synapses_size’ [-Wunused-variable]
+  unsigned synapses_size = m_synapses.size();
+           ^
+src/layers/par_for_clustered_layer.cpp: In constructor ‘ParForClusteredLayer::ParForClusteredLayer(unsigned int, unsigned int, const std::vector<synapse_t>&)’:
+src/layers/par_for_clustered_layer.cpp:25:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i = 0; i < m_synapses.size(); i++) {
+                   ^
+src/layers/par_for_clustered_layer.cpp: In lambda function:
+src/layers/par_for_clustered_layer.cpp:54:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   for(int j = 0; j < curr_output_neuron_synapses.size(); j++){
+                    ^
